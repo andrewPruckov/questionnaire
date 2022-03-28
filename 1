@@ -1,0 +1,67 @@
+package com.company;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
+
+public class Main {
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Опросник");
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(300,150);
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+        frame.setLocation(x, y);
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
+        JLabel label = new JLabel("Ты дурак?");
+        label.setBounds(115, 10,100,50);
+        JButton button1 = new JButton("ДА");
+        button1.setBounds(40,70,60,30);
+        JButton button2 = new JButton("Нет");
+        button2.setBounds(190,70,60,30);
+        panel.add(label);
+        panel.add(button1);
+        panel.add(button2);
+        frame.add(panel);
+        frame.setVisible(true);
+        ActionListener actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                label.setVerticalAlignment(JLabel.CENTER);
+                label.setHorizontalAlignment(JLabel.CENTER);
+                label.setBounds(-5,-25,300,150);
+                label.setSize(300,150);
+                label.setText("Я так и знал!");
+                button1.getParent().remove(button1);
+                button2.getParent().remove(button2);
+            }
+        };
+        button1.addActionListener(actionListener);
+        while (true) {
+            Point p = MouseInfo.getPointerInfo().getLocation();
+            int z = p.x - 7;
+            int k = p.y - 30;
+            int x1 = button2.getBounds().x + frame.getBounds().x;
+            int y1 = button2.getBounds().y + frame.getBounds().y;
+            int x2 = button2.getBounds().x + button2.getSize().width + frame.getBounds().x;
+            int y2 = button2.getBounds().y + button2.getSize().height + frame.getBounds().y;
+
+            Random d = new Random();
+            int a = d.nextInt(210);
+            int b = d.nextInt(80);
+
+            boolean withinX = z >= x1 && z <= x2;
+            boolean withinY = k >= y1 && k <= y2;
+
+            if (withinX && withinY) {
+                button2.setLocation(a, b);
+            }
+        }
+    }
+}
